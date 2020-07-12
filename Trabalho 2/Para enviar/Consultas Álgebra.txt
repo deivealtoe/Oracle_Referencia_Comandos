@@ -1,0 +1,20 @@
+Alunos:
+
+Deivisson Altoé Ferreira
+Lucas de Sena Bastos
+André de Almeida Lopes de Souza
+Marco Antonio Gonçalves Silva
+Marcio Marques de Freitas
+Marco Antônio Patrocinio
+
+
+
+
+Consultas Álgebra
+
+σ Nome = “A” (Cliente)
+σ (Telefone = “27” OR Telefone = “28” (Telefone))
+σ Cidade = “Serra” (Endereço)
+σ PrecoDiaria < 600,00 (Carro)
+σ Cor = “Prata” (Carro)
+σ Modelo = “Ret” (Modelo)

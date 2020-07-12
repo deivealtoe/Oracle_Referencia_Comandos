@@ -1,0 +1,22 @@
+Alunos:
+
+Deivisson Altoé Ferreira
+Lucas de Sena Bastos
+André de Almeida Lopes de Souza
+Marco Antonio Gonçalves Silva
+Marcio Marques de Freitas
+Marco Antônio Patrocinio
+
+
+
+
+Regras de Negócio:
+
+RN 01 - O telefone pode pertencer a no mínimo e no máximo um cliente.
+RN 02 - O cliente pode possuir um telefone ou vários.
+RN 03 - O endereço pode estar vinculado a no mínimo um cliente e no máximo vários clientes.
+RN 04 - O cliente pode estar vinculado a no mínimo e no máximo um endereço.
+RN 05 - O cliente pode alugar vários ou nenhum carro.
+RN 06 - O carro pode ser alugado por nenhum ou vários clientes.
+RN 07 - O carro pode conter no mínimo e no máximo um modelo.
+RN 08 - O modelo pode estar presente em no mínimo um carro e no máximo vários carros.

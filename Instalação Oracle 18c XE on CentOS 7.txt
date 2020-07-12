@@ -1,0 +1,112 @@
+# Máquina Virtual:
+# Instalação Mínima do CentOS 7
+# CPU: 3 núcleos
+# RAM: 3GB
+# HD: 40GB = 500MB para /boot
+#            2GB de swap
+#            37,5GB para o /
+# Network: Modo bridge = MAC: 08:00:27:E6:84:0A
+#                        IP fixo: 192.168.3.22
+#                        Gateway: 192.168.3.1
+#                        DNS1: 8.8.8.8
+#                        DNS2: 8.8.4.4
+# root: 123456
+
+# Atualizando a máquina virtual
+# yum update -y
+
+# Instalando o nano, pq é melhor q o vim SIM
+# yum install nano
+
+# Desativando o SELINUX
+# Para ver o status: # sestatus
+# Para desativar, edite o arquivo a seguir:
+# nano /etc/selinux/config
+# Altere "enforcing" para "disabled"
+# Salve e feche o arquivo
+
+# Desativando o FIREWALLD
+# Para ver o status: # systemctl status firewalld
+# Para desativar, execute:
+# systemctl stop firewalld
+# Para desabilitar e fazer com que ele não execute ao ligar a VM execute:
+# systemctl disable firewalld
+
+# Fixando o IP na VM
+# Edite o arquivo do seu dispositivo, por exemplo no meu caso é o "ifcfg-enp0s3":
+# nano /etc/sysconfig/network-scripts/ifcfg-enp0s3
+# Altere:
+BOOTPROTO="none"
+# Adicione:
+IPADDR=192.168.3.22
+GATEWAY=192.168.3.1
+DNS1=8.8.8.8
+DNS2=8.8.4.4
+# Salve o arquivo e feche
+# Reinicie o serviço da rede executando:
+# systemctl restart network
+
+# Editando o nome do host:
+# nano /etc/hostname
+# Alterei:
+sankhyaapp-oracle18cxe.localdomain
+
+# No arquivo hosts, adicionado uma linha
+# nano /etc/hosts
+# Adicionado:
+192.168.3.22 sankhyaapp-oracle18cxe
+
+# Hora de reiniciar a VM e ver se tudo continua funcionando como deveria...
+# shutdown -r now
+
+# Parece que tá tudo correndo bem por enquanto...
+
+# Criando uma pasta para baixar os instaladores
+# mkdir /installs
+
+# Entrando na pasta
+# cd /installs
+
+# Instalando o wget para baixar os instaladores
+# yum install wget -y
+
+# Baixando os instaladores
+# Préinstall do Oracle 18c XE no CentOS 7 ≃ 18KB
+# wget https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+# Instalador Oracle 18c XE ≃ 2,4GB
+# wget https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
+
+# Executando o RPM preinstall
+# Ele automaticamente cria o usuário oracle e seus grupos, bem como configura parâmetros do kernel necessários para o oracle 18c xe
+# yum -y localinstall oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+
+# Executando a instalação do Oracle 18c XE
+# yum -y localinstall oracle-database-xe-18c-1.0-1.x86_64.rpm
+# Vai tomar uma água pq vai demorar um pouco...
+
+# Depois da instalação, é hora de rodar o script de configuração
+# Logo no começo da execução você precisará inserir a senha para as contas SYS, SYSTEM e PDBADMIN
+# A primeira vez que você executar provavelmente vai ocorrer um erro com o listener, execute novamente que vai funcionar
+# /etc/init.d/oracle-xe-18c configure
+# Vai tomar mais água pq isso tbm demora...
+
+# Logue como usuário oracle
+# Para adicionar uma senha, execute:
+# passwd oracle
+# Na pasta home do usuário oracle, adicione ao final do arquivo:
+$ nano .bashrc
+Adicione:
+export ORACLE_SID=XE
+export ORAENV_ASK=NO
+. /opt/oracle/product/18c/dbhomeXE/bin/oraenv
+
+# Habilitando o serviço do oracle para iniciar automaticamente quando ligar a VM
+# Logue como usuário root e execute:
+# systemctl enable oracle-xe-18c
+# Agora você pode executar os comandos:
+# systemctl start oracle-xe-18c
+# systemctl stop oracle-xe-18c
+# systemctl restart oracle-xe-18c
+# systemctl status oracle-xe-18c
+
+# E seu banco de dados está pronto!
