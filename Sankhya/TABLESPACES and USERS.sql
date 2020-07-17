@@ -15,12 +15,30 @@ DATAFILE 'sanklob.dbf' SIZE 100M REUSE
 AUTOEXTEND ON NEXT 10M MAXSIZE 11000M
 ONLINE;
 
---DROP USER teste CASCADE;
+CREATE TABLESPACE sankhya
+DATAFILE '/opt/oracle/oradata/XE/XEPDB1/sankhya.dbf' SIZE 100M REUSE
+AUTOEXTEND ON NEXT 10M MAXSIZE 11000M
+ONLINE;
+
+CREATE TABLESPACE sankind
+DATAFILE '/opt/oracle/oradata/XE/XEPDB1/sankind.dbf' SIZE 100M REUSE
+AUTOEXTEND ON NEXT 10M MAXSIZE 11000M
+ONLINE;
+
+CREATE TABLESPACE sanklob
+DATAFILE '/opt/oracle/oradata/XE/XEPDB1/sanklob.dbf' SIZE 100M REUSE
+AUTOEXTEND ON NEXT 10M MAXSIZE 11000M
+ONLINE;
+
+
+--DROP USER sankhya CASCADE;
 
 --DROP TABLESPACE sanklob;
 
 
 /* ====================================================================================================================================================================== */
+
+SELECT * FROM dba_users;
 
 -- MOSTRA TABLESPACES
 select b.tablespace_name,
@@ -45,7 +63,7 @@ FROM
     group by tablespace_name
 ) b
 where a.tablespace_name(+) = b.tablespace_name
-ORDER BY 2;s
+ORDER BY 1;
 
 -- MOSTRA USUÁRIOS CONECTADOS
 select s.sid as "Sid", s.serial# as "Serial#", nvl(s.username, ' ') as "Username", s.machine as "Machine", s.schemaname as "Schema name", s.logon_time as "Login time", s.program as "Program", s.osuser as "Os user", s.status as "Status", nvl(s.process, ' ') as "OS Process id"
