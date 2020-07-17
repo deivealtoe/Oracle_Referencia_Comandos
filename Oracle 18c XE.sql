@@ -33,3 +33,17 @@ FROM v$database;
 SELECT name,
        open_mode
 FROM v$containers;
+
+
+/*
+ESSES COMANDOS DEVEM SER EXECUTADOS COMO "sqlplus / as sysdba"
+
+show user;
+
+show con_name;
+
+alter session set container = xepdb1;
+
+Para a criação da tablespace, é necessário informar o parâmetro "DATAFILE" e colocar o novo tablespace dentro do PDB que estamos usando (como nas criações acima)
+*/
+
