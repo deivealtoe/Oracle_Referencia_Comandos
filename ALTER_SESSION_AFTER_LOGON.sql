@@ -1,0 +1,12 @@
+CREATE OR REPLACE TRIGGER alter_session
+AFTER LOGON ON DATABASE
+DECLARE
+	cmd VARCHAR2(200);
+
+BEGIN
+	
+	cmd := 'ALTER SESSION SET nls_date_format = "dd/mm/yy"';
+
+	EXECUTE IMMEDIATE cmd;
+
+END;
